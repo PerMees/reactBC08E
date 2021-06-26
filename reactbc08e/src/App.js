@@ -1,14 +1,13 @@
 import logo from "./logo.svg";
 import "./App.css";
 import { Fragment } from "react";
-// import HomeComponents from "./Components/HomeComponent";
-// import DataBiding from "./DataBiding/DataBiding";
+
+import Home from "./Screens/Home";
 
 function App() {
   return (
     <Fragment>
-      {/* <HomeComponents /> */}
-      {/* {<DataBiding /> */}
+      <Home />
     </Fragment>
   );
 }
