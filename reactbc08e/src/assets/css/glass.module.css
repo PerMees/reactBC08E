@@ -1,0 +1,56 @@
+.slider {
+  background: url("../glassesImage/background.jpg") rgba(0, 0, 0, 0.2) no-repeat
+    center;
+  background-size: cover;
+  height: 100vh;
+  background-blend-mode: multiply;
+}
+.header {
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.header h2 {
+  color: white;
+  text-align: center;
+  font-size: 2rem;
+}
+.glass__item {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+.glass__item:first-child img:nth-child(2) {
+  position: absolute;
+  top: 95px;
+  width: 12rem;
+  opacity: 0.6;
+}
+.detail {
+  position: absolute;
+  bottom: 0;
+  background-color: rgba(255, 134, 53, 0.5);
+  width: 20.25rem;
+}
+.detail h3 {
+  color: blue;
+  display: flex;
+  margin-top: 1rem;
+  justify-content: space-around;
+}
+.detail p {
+  color: white;
+  font-weight: bold;
+  margin-left: 3rem;
+}
+.control {
+  background-color: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0.5rem;
+  margin-top: 1.2rem;
+}
+.control button {
+  padding: 1rem;
+  margin: 1rem 0.2rem;
+}
