@@ -8,6 +8,9 @@ export default class Glass extends Component {
     super(params);
     this.state = {
       glass: 1,
+      name: data.default[0].name,
+      price: data.default[0].price,
+      desc: data.default[0].desc,
     };
   }
   contentButton(arr) {
@@ -29,9 +32,13 @@ export default class Glass extends Component {
   handleGlassBtn(id) {
     this.setState({
       glass: id,
+      name: data.default[id - 1].name,
+      price: data.default[id - 1].price,
+      desc: data.default[id - 1].desc,
     });
   }
   render() {
+    console.log(data.default);
     return (
       <Fragment>
         <div className={`${style.slider}`}>
@@ -51,12 +58,10 @@ export default class Glass extends Component {
                 />
                 <div className={`${style.detail}`}>
                   <h3>
-                    Name <span>Price</span>
+                    {this.state.name}
+                    <span>${this.state.price}</span>
                   </h3>
-                  <p>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Inventore, nobis?
-                  </p>
+                  <p>{this.state.desc}</p>
                 </div>
               </div>
               <div className={`col-6 ${style.glass__item}`}>
