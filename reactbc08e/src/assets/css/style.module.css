@@ -1,0 +1,85 @@
+@font-face {
+  font-family: pony;
+  src: url("../fonts/Pony.ttf");
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: pony, serif;
+}
+
+.speech__bubble {
+  position: relative;
+  border: 10px solid #45d994;
+  background-color: #fff;
+  border-radius: 0.4em;
+  padding: 1rem;
+  width: 9rem;
+  height: 9rem;
+  margin: 0 auto;
+  overflow-y: hidden;
+}
+
+.speech__bubble2 {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border: 10px solid #45d994;
+  background-color: #fff;
+  border-radius: 0.4em;
+  padding: 1rem;
+  width: 9rem;
+  height: 9rem;
+  margin: 0 auto;
+}
+
+.speech__bubble img {
+  padding: 1rem;
+  width: 7rem;
+  height: 7rem;
+}
+
+.speech__bubble2:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 35px solid transparent;
+  border-top-color: #45d994;
+  border-bottom: 0;
+  border-left: 0;
+  margin-left: -17.5px;
+  margin-bottom: -35px;
+}
+
+.page {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  background: #000;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  padding: 4rem;
+}
+
+.imgBg {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 10rem;
+  left: 0;
+  background: url("../img/bgGameOanTuXi.png") no-repeat;
+  background-size: cover;
+}
+
+.controller div img {
+  background-color: #fff;
+  padding: 4px;
+  border: none;
+  border-radius: 4px;
+}
