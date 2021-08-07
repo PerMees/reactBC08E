@@ -1,14 +1,12 @@
 import logo from "./logo.svg";
 import "./App.css";
 import { Fragment } from "react";
-// import HomeComponents from "./Components/HomeComponent";
-// import DataBiding from "./DataBiding/DataBiding";
+import BaiTapQuanLyNguoiDung from "./Components/BaiTapQuanLyNguoiDung";
 
 function App() {
   return (
     <Fragment>
-      {/* <HomeComponents /> */}
-      {/* {<DataBiding /> */}
+      <BaiTapQuanLyNguoiDung />
     </Fragment>
   );
 }
