@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 
 class TableDanhSachNguoiDung extends Component {
   render() {
-    console.log(this.props.mangNguoiDung);
     return (
       <div className="card mt-4">
         <div className="card-header bg-dark text-white">
@@ -35,10 +34,20 @@ class TableDanhSachNguoiDung extends Component {
                   <td>{nguoiDung.soDienThoai}</td>
                   <td>{nguoiDung.maLoaiNguoiDung}</td>
                   <td>
-                    <button className="btn btn-outline-danger">Xoá</button>
+                    <button
+                      className="btn btn-outline-danger"
+                      onClick={() =>
+                        this.props.xoaNguoiDung(nguoiDung.taiKhoan)
+                      }
+                    >
+                      Xoá
+                    </button>
                   </td>
                   <td>
-                    <button className="btn btn-outline-primary">
+                    <button
+                      className="btn btn-outline-primary"
+                      onClick={() => this.props.chinhSuaNguoiDung(nguoiDung)}
+                    >
                       Chỉnh sửa
                     </button>
                   </td>
@@ -56,7 +65,13 @@ const mapStateToProps = (state) => ({
   mangNguoiDung: state.BaiTapQuanLyNguoiDungReducer.mangNguoiDung,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    xoaNguoiDung: (taiKhoan) => dispatch({ type: "XOA_NGUOI_DUNG", taiKhoan }),
+    chinhSuaNguoiDung: (nguoiDung) =>
+      dispatch({ type: "CHINH_SUA_NGUOI_DUNG", nguoiDung }),
+  };
+};
 
 export default connect(
   mapStateToProps,
