@@ -25,24 +25,6 @@ const stateDefault = {
     soDienThoai: "",
     maLoaiNguoiDung: "",
   },
-  nguoiDung: {
-    values: {
-      taiKhoan: "",
-      hoTen: "",
-      password: "",
-      email: "",
-      soDienThoai: "",
-      maLoaiNguoiDung: "",
-    },
-    errors: {
-      taiKhoan: "",
-      hoTen: "",
-      password: "",
-      email: "",
-      soDienThoai: "",
-      maLoaiNguoiDung: "",
-    },
-  },
 };
 
 export const BaiTapQuanLyNguoiDungReducer = (state = stateDefault, action) => {
@@ -59,31 +41,10 @@ export const BaiTapQuanLyNguoiDungReducer = (state = stateDefault, action) => {
       return { ...state };
     }
     case "CHINH_SUA_NGUOI_DUNG": {
-      state.nguoiDung.values = action.nguoiDung;
-      state.nguoiDung = { ...state.nguoiDung };
+      state.nguoiDungChinhSua = action.nguoiDung;
       return { ...state };
     }
-    case "HANDLE_CHANGE_INPUT": {
-      state.nguoiDung = action.nguoiDung;
-      return { ...state };
-    }
-    case "CAP_NHAT_NGUOI_DUNG": {
-      const mangNguoiDungCapNhat = [...state.mangNguoiDung];
-      let nguoiDungCapNhat = mangNguoiDungCapNhat.find(
-        (nguoiDung) => nguoiDung.taiKhoan === action.nguoiDungCapNhat.taiKhoan
-      );
 
-      if (nguoiDungCapNhat) {
-        nguoiDungCapNhat.hoTen = action.nguoiDungCapNhat.hoTen;
-        nguoiDungCapNhat.matKhau = action.nguoiDungCapNhat.matKhau;
-        nguoiDungCapNhat.email = action.nguoiDungCapNhat.email;
-        nguoiDungCapNhat.soDienThoai = action.nguoiDungCapNhat.soDienThoai;
-        nguoiDungCapNhat.maLoaiNguoiDung =
-          action.nguoiDungCapNhat.maLoaiNguoiDung;
-      }
-      state.mangNguoiDung = mangNguoiDungCapNhat;
-      return { ...state };
-    }
     default:
       return { ...state };
   }

@@ -2,22 +2,55 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 class FormDangKy extends Component {
+  state = {
+    values: {
+      taiKhoan: "",
+      hoTen: "",
+      password: "",
+      email: "",
+      soDienThoai: "",
+      maLoaiNguoiDung: "",
+    },
+    errors: {
+      taiKhoan: "",
+      hoTen: "",
+      password: "",
+      email: "",
+      soDienThoai: "",
+      maLoaiNguoiDung: "",
+    },
+  };
+
+  componentWillReceiveProps(newProps) {
+    this.setState({
+      values: newProps.nguoiDungChinhSua,
+    });
+  }
+
+  // static getDerivedStateFromProps(newProps, currentState) {
+  //   if (currentState.values.taiKhoan !== newProps.nguoiDungChinhSua.taiKhoan)
+  //     // return về state mới
+  //     return {
+  //       ...currentState,
+  //       values: newProps.nguoiDungChinhSua,
+  //     };
+  // }
   handleSubmit = (event) => {
     event.preventDefault(); //Cản sự kiện refresh trang
 
     let valid = true;
 
     // Duyệt tất cả lỗi phải bằng rỗng
-    for (let key in this.props.nguoiDung.errors) {
-      if (this.props.nguoiDung.errors[key] !== "") {
+    for (let key in this.state.errors) {
+      if (this.state.errors[key] !== "") {
         valid = false;
         break;
       }
     }
     // Duyệt tất cả input !== rỗng
 
-    for (let key in this.props.nguoiDung.values) {
-      if (this.props.nguoiDung.values[key] === "") {
+    for (let key in this.state.values) {
+      if (this.state.values[key] === "") {
         valid = false;
         break;
       }
@@ -27,13 +60,13 @@ class FormDangKy extends Component {
       return;
     }
 
-    this.props.themNguoiDung(this.props.nguoiDung.values);
+    this.props.themNguoiDung(this.state.values);
   };
   handleChangeInput = (event) => {
     let { value, name } = event.target;
     let messageError = "";
-    let newValues = { ...this.props.nguoiDung.values };
-    let newErrors = { ...this.props.nguoiDung.errors };
+    let newValues = { ...this.state.values };
+    let newErrors = { ...this.state.errors };
     let attrValue = event.target.getAttribute("data-type") || "";
     let regex;
 
@@ -41,7 +74,7 @@ class FormDangKy extends Component {
       regex =
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     else if (attrValue === "number") regex = /^\d+$/;
-    else if (attrValue === "text") regex = /^[A-Za-z]+$/;
+    else if (attrValue === "text") regex = /^[A-Z a-z]+$/;
 
     if (regex) {
       if (!regex.test(value)) messageError = name + " phải đúng định dạng";
@@ -50,11 +83,14 @@ class FormDangKy extends Component {
     if (value.trim() === "") messageError = name + " không được bỏ trống";
     newErrors[name] = messageError;
 
-    this.props.handleChangeInput({ values: newValues, errors: newErrors });
+    this.setState({
+      values: newValues,
+      errors: newErrors,
+    });
   };
   render() {
     let { taiKhoan, hoTen, matKhau, email, soDienThoai, maLoaiNguoiDung } =
-      this.props.nguoiDung.values;
+      this.state.values;
     return (
       <form
         className="card mt-5"
@@ -73,9 +109,7 @@ class FormDangKy extends Component {
                   name="taiKhoan"
                   onChange={this.handleChangeInput}
                 />
-                <p className="text-danger">
-                  {this.props.nguoiDung.errors.taiKhoan}
-                </p>
+                <p className="text-danger">{this.state.errors.taiKhoan}</p>
               </div>
               <div className="form-group">
                 <p>Mật khẩu</p>
@@ -86,9 +120,7 @@ class FormDangKy extends Component {
                   name="password"
                   onChange={this.handleChangeInput}
                 />
-                <p className="text-danger">
-                  {this.props.nguoiDung.errors.password}
-                </p>
+                <p className="text-danger">{this.state.errors.password}</p>
               </div>
               <div className="form-group">
                 <p>Email</p>
@@ -100,9 +132,7 @@ class FormDangKy extends Component {
                   name="email"
                   onChange={this.handleChangeInput}
                 />
-                <p className="text-danger">
-                  {this.props.nguoiDung.errors.email}
-                </p>
+                <p className="text-danger">{this.state.errors.email}</p>
               </div>
             </div>
             <div className="col-6">
@@ -116,9 +146,7 @@ class FormDangKy extends Component {
                   name="hoTen"
                   onChange={this.handleChangeInput}
                 />
-                <p className="text-danger">
-                  {this.props.nguoiDung.errors.hoTen}
-                </p>
+                <p className="text-danger">{this.state.errors.hoTen}</p>
               </div>
               <div className="form-group">
                 <p>Số điện thoại</p>
@@ -130,9 +158,7 @@ class FormDangKy extends Component {
                   name="soDienThoai"
                   onChange={this.handleChangeInput}
                 />
-                <p className="text-danger">
-                  {this.props.nguoiDung.errors.soDienThoai}
-                </p>
+                <p className="text-danger">{this.state.errors.soDienThoai}</p>
               </div>
               <div className="form-group">
                 <p>Mã loại người dùng</p>
@@ -154,13 +180,7 @@ class FormDangKy extends Component {
           <button className="btn btn-outline-success mr-2" type="submit">
             Đăng ký
           </button>
-          <button
-            className="btn btn-outline-primary"
-            type="button"
-            onClick={() =>
-              this.props.capNhatNguoiDung(this.props.nguoiDung.values)
-            }
-          >
+          <button className="btn btn-outline-primary" type="button">
             Cập nhật
           </button>
         </div>
@@ -171,7 +191,6 @@ class FormDangKy extends Component {
 
 const mapStateToProps = (state) => ({
   nguoiDungChinhSua: state.BaiTapQuanLyNguoiDungReducer.nguoiDungChinhSua,
-  nguoiDung: state.BaiTapQuanLyNguoiDungReducer.nguoiDung,
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -179,8 +198,6 @@ const mapDispatchToProps = (dispatch) => {
     themNguoiDung: (user) => dispatch({ type: "THEM_NGUOI_DUNG", user }),
     handleChangeInput: (nguoiDung) =>
       dispatch({ type: "HANDLE_CHANGE_INPUT", nguoiDung }),
-    capNhatNguoiDung: (nguoiDungCapNhat) =>
-      dispatch({ type: "CAP_NHAT_NGUOI_DUNG", nguoiDungCapNhat }),
   };
 };
 
