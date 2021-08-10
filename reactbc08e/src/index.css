@@ -1,13 +1,52 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.scroll {
+  position: absolute;
+  top: 100%;
+  bottom: 0;
+  width: 100%; /* viewport width */
+  height: 40vh; /* viewport height */
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 4px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.historySearch {
+  background-color: #fff;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  box-shadow: 5px 5px 5px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  position: absolute;
+  top: 100%;
+  bottom: 0;
+  width: 12.5rem; /* viewport width */
+  height: 40vh; /* viewport height */
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
