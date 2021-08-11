@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Fragment } from "react";
 import { connect } from "react-redux";
-import Search from "./Search";
 import SearchHistory from "./SearchHistory";
 
 class TableSinhVien extends Component {
@@ -34,16 +33,29 @@ class TableSinhVien extends Component {
     }
   };
   renderTable() {
-    return this.props.mangSinhVien.map((sv, index) => {
+    let mangCanRender;
+    if (
+      this.props.mangKetQuaTimKiem.length === 0 ||
+      this.state.noiDungTimKiem === ""
+    )
+      mangCanRender = [...this.props.mangSinhVien];
+    else mangCanRender = [...this.props.mangKetQuaTimKiem];
+
+    if (
+      this.state.noiDungTimKiem !== "" &&
+      this.props.mangKetQuaTimKiem.length === 0
+    )
+      return <tr>Không tìm thấy kết quả</tr>;
+    return mangCanRender.map((sv, index) => {
       return (
         <tr
           key={index}
           style={{ lineHeight: 5, borderBottom: "1px solid rgba(0,0,0,0.2)" }}
         >
-          <td style={{ verticalAlign: "middle", width: 400, paddingLeft: 65 }}>
+          <td style={{ verticalAlign: "middle", width: 500, paddingLeft: 65 }}>
             {sv.ma}
           </td>
-          <td style={{ verticalAlign: "middle", width: 350 }}>{sv.hoTen}</td>
+          <td style={{ verticalAlign: "middle", width: 500 }}>{sv.hoTen}</td>
           <td style={{ verticalAlign: "middle", width: 300 }}>
             {sv.soDienThoai}
           </td>
@@ -119,7 +131,7 @@ class TableSinhVien extends Component {
                     type="text"
                     style={{
                       padding: "0.5rem 1rem",
-                      borderRadius: "4px 0 0 4px",
+                      borderRadius: "4px",
                       height: "2.3rem",
                       border: "none",
                     }}
@@ -138,7 +150,7 @@ class TableSinhVien extends Component {
                       })
                     }
                   />
-                  <button
+                  {/* <button
                     className="bg-success"
                     style={{
                       border: "none",
@@ -149,14 +161,14 @@ class TableSinhVien extends Component {
                       height: "2.3rem",
                       borderRadius: "0 4px 4px 0",
                     }}
-                    onClick={() =>
-                      this.props.addResultSearch(this.state.noiDungTimKiem)
-                    }
+                    onClick={() => {
+                      this.props.addResultSearch(this.state.noiDungTimKiem);
+                      this.props.search(this.state.noiDungTimKiem);
+                    }}
                   >
                     <i className="fas fa-search"></i>
-                  </button>
-                  <SearchHistory display={this.state.displayHistory} />
-                  <Search display={this.state.displaySearch} />
+                  </button> */}
+                  {/* <SearchHistory display={this.state.displayHistory} /> */}
                 </div>
               </th>
             </tr>
@@ -171,6 +183,7 @@ class TableSinhVien extends Component {
 const mapStateToProps = (state) => ({
   mangSinhVien: state.sinhVienReducer.mangSinhVien,
   noiDungTimKiem: state.sinhVienReducer.noiDungTimKiem,
+  mangKetQuaTimKiem: state.sinhVienReducer.mangKetQuaTimKiem,
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -180,6 +193,8 @@ const mapDispatchToProps = (dispatch) => {
     changeInputSearch: (val) =>
       dispatch({ type: "SUA_NOI_DUNG_TIM_KIEM", val }),
     addResultSearch: (val) => dispatch({ type: "LUU_NOI_DUNG_TIM_KIEM", val }),
+    search: (noiDungTimKiem) =>
+      dispatch({ type: "KET_QUA_TIM_KIEM", noiDungTimKiem }),
   };
 };
 

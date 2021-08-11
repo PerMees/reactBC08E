@@ -51,7 +51,7 @@ const stateDefault = {
     {
       ma: "9",
       hoTen: "Lê Văn I",
-      soDienThoai: "09016432432",
+      soDienThoai: "0901432432",
       email: "levani@gmail.com",
     },
   ],
@@ -63,6 +63,7 @@ const stateDefault = {
   },
   mangTimKiem: [],
   noiDungTimKiem: "",
+  mangKetQuaTimKiem: [],
 };
 
 export const sinhVienReducer = (state = stateDefault, action) => {
@@ -92,23 +93,30 @@ export const sinhVienReducer = (state = stateDefault, action) => {
       let sinhVienCapNhat = mangSinhVienCapNhat.find(
         (sv) => sv.ma === action.sv.ma
       );
-
       if (sinhVienCapNhat) {
         sinhVienCapNhat.hoTen = action.sv.hoTen;
         sinhVienCapNhat.soDienThoai = action.sv.soDienThoai;
         sinhVienCapNhat.email = action.sv.email;
       }
-
       state.mangSinhVien = mangSinhVienCapNhat;
       return { ...state };
     }
     case "SUA_NOI_DUNG_TIM_KIEM": {
       state.noiDungTimKiem = action.val;
+      state.mangKetQuaTimKiem = [];
+      let ketQuaTimKiem = [...state.mangSinhVien].filter(
+        (sv) =>
+          sv.hoTen.toLowerCase().includes(action.val.toLowerCase()) ||
+          sv.email.toLowerCase().includes(action.val.toLowerCase()) ||
+          sv.soDienThoai.includes(action.val)
+      );
+      state.mangKetQuaTimKiem = ketQuaTimKiem;
       return { ...state };
     }
     case "LUU_NOI_DUNG_TIM_KIEM": {
       let mangTimKiemCapNhat = [...state.mangTimKiem];
-      mangTimKiemCapNhat.push(action.val);
+      if (!mangTimKiemCapNhat.includes(action.val))
+        mangTimKiemCapNhat.push(action.val);
       state.mangTimKiem = mangTimKiemCapNhat;
       return { ...state };
     }
@@ -117,6 +125,31 @@ export const sinhVienReducer = (state = stateDefault, action) => {
         (item) => item !== action.item
       );
       state.mangTimKiem = mangTimKiemCapNhat;
+      return { ...state };
+    }
+    case "CHON_NOI_DUNG_TIM_KIEM": {
+      state.noiDungTimKiem = action.item;
+      let ketQuaTimKiem = [...state.mangSinhVien].filter(
+        (sv) =>
+          sv.hoTen.toLowerCase().includes(action.item.toLowerCase()) ||
+          sv.email.toLowerCase().includes(action.item.toLowerCase()) ||
+          sv.soDienThoai.includes(action.item)
+      );
+      state.mangKetQuaTimKiem = ketQuaTimKiem;
+      return { ...state };
+    }
+    case "KET_QUA_TIM_KIEM": {
+      let ketQuaTimKiem = [...state.mangSinhVien].filter(
+        (sv) =>
+          sv.hoTen
+            .toLowerCase()
+            .includes(action.noiDungTimKiem.toLowerCase()) ||
+          sv.email
+            .toLowerCase()
+            .includes(action.noiDungTimKiem.toLowerCase()) ||
+          sv.soDienThoai.includes(action.noiDungTimKiem)
+      );
+      state.mangKetQuaTimKiem = ketQuaTimKiem;
       return { ...state };
     }
     default:

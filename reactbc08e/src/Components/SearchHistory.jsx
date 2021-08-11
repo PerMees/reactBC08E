@@ -1,16 +1,33 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Search from "./Search";
 
 class SearchHistory extends Component {
   tableHistorySearch() {
     return this.props.mangTimKiem.map((item, index) => {
       return (
         <tr key={index} style={{ borderBottom: "1px solid rgba(0,0,0,0.2)" }}>
-          <td style={{ width: 300, lineHeight: 3 }}>
-            <button className="btn w-75 text-left pl-3">{item}</button>
+          <td
+            style={{ width: 300, lineHeight: 3, padding: "3px 3px 3px 15px" }}
+          >
+            <i
+              className="fas fa-history"
+              style={{ color: "rgba(0,0,0,0.5)" }}
+            ></i>
             <button
-              className="btn text-left pl-3 btn-outline-danger"
+              className="ml-2 text-left"
+              style={{
+                display: "inline-block",
+                border: "none",
+                backgroundColor: "transparent",
+                width: "110px",
+              }}
+              onClick={() => this.props.chonNoiDung(item)}
+            >
+              {item}
+            </button>
+            <button
+              name="SearchBtn"
+              className="btn text-danger"
               onClick={() => this.props.deleteHistorySearch(item)}
             >
               X
@@ -63,6 +80,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     deleteHistorySearch: (item) =>
       dispatch({ type: "XOA_LICH_SU_TIM_KIEM", item }),
+    chonNoiDung: (item) => dispatch({ type: "CHON_NOI_DUNG_TIM_KIEM", item }),
   };
 };
 
